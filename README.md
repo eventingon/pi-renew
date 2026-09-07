@@ -363,6 +363,20 @@ the same extension serve callers with nothing to do with this protocol.
 | [`skills/subagent-brief/IMPROVEMENT-BUDGET.md`](skills/subagent-brief/IMPROVEMENT-BUDGET.md) | What an agent may improve on its own authority (🟢), propose (🟡), escalate (🔴), or repair to unblock a unit (🔧) |
 | [`.claude/skills/pi-driver-common/CONTRACT.md`](.claude/skills/pi-driver-common/CONTRACT.md) | The shared driver contract: *start · send · settled? · dead? · read* — development-only |
 
+## Cursor and Codex
+
+The Pi implementation cannot be loaded directly by Cursor or Codex: its session
+restart API is specific to `@earendil-works/pi-coding-agent`. This repository
+also ships native adapters under [`adapters/`](adapters/), plus ready-to-use
+`.cursor/`, `.agents/` and `.codex/` integration files.
+
+Cursor exposes the workflow as `.cursor/commands/renew-loop.md` and
+`.cursor/commands/renew-from-handover.md`, with the protocol in
+`.cursor/rules/pi-renew.mdc`. Codex exposes it as the local
+`.agents/skills/renew-loop/SKILL.md` skill. Both persist state in
+`.renew-loop/` and require a new conversation/task for continuation; neither
+claims to restart a session automatically.
+
 ## Development
 
 ```bash

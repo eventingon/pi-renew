@@ -61,6 +61,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { discoverDefaultModel } from "./default-model";
+import { PI_COMMAND, PI_SPAWN_SHELL } from "./pi-command";
 
 // --- Portable paths (computed from this file's own location, never hardcoded to /data/...) ---
 const TEST_DIR = dirname(fileURLToPath(import.meta.url));
@@ -372,7 +373,11 @@ function driveRenewalState(
       "--model", MODEL_ID,
       "-e", EXTENSION_PATH, // F125: explicit -e loads the extension; deliberately NO -ne
     ];
-    const child = spawn("pi", args, { cwd: projDir, stdio: ["pipe", "pipe", "pipe"] });
+    const child = spawn(PI_COMMAND, args, {
+      cwd: projDir,
+      stdio: ["pipe", "pipe", "pipe"],
+      shell: PI_SPAWN_SHELL,
+    });
     onChild(child);
 
     const events: any[] = [];

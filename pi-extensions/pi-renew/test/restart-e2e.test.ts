@@ -66,6 +66,7 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve, join } from "node:path";
 import { discoverDefaultModel } from "./default-model";
+import { PI_COMMAND, PI_SPAWN_SHELL } from "./pi-command";
 
 /** The model the seed names, read from `pi`'s settings so it matches what `pi` will pick. */
 const SEED_MODEL = discoverDefaultModel();
@@ -293,7 +294,11 @@ function driveRestart(
       "-nc",
       "-e", EXTENSION_PATH, // F125: explicit -e loads the extension; deliberately NO -ne
     ];
-    const child = spawn("pi", args, { cwd: REPO_ROOT, stdio: ["pipe", "pipe", "pipe"] });
+    const child = spawn(PI_COMMAND, args, {
+      cwd: REPO_ROOT,
+      stdio: ["pipe", "pipe", "pipe"],
+      shell: PI_SPAWN_SHELL,
+    });
     onChild(child);
 
     const events: any[] = [];
