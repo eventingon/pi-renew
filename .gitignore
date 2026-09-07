@@ -6,5 +6,8 @@ dist/
 .pi/renew/renewal-*.json
 .pi/renew/restart-inflight-*.json
 
+# Runtime state written by Cursor/Codex adapters.
+.renew-loop/
+
 # Research record kept locally, not published with the package.
 docs/delegate-restart-streaming-throw.md

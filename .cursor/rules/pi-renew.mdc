@@ -1,0 +1,52 @@
+---
+description: Protocolo de handover e renovação de contexto para trabalhos longos
+alwaysApply: false
+---
+
+# Pi-renew para Cursor
+
+Quando o usuário pedir `renew-loop`, `renew-from-handover`, continuar de um
+handover ou trabalhar em ciclos longos, use o protocolo abaixo.
+
+## Contrato
+
+- O handover é a fonte de continuidade; não dependa de memória da conversa.
+- Trabalhe em exatamente uma unidade por ciclo.
+- Leia primeiro o handover e os arquivos que ele apontar. Não faça uma varredura
+  ampla para reconstruir contexto perdido.
+- Antes de editar, declare a unidade, arquivos permitidos, critério de aceite e
+  verificação.
+- Depois de editar, execute a verificação apropriada, registre o resultado e
+  atualize o handover antes de pedir uma nova conversa.
+- Não faça commit, push, merge, deploy ou mudança destrutiva sem autorização
+  explícita do usuário.
+- Se houver bloqueio, registre causa, evidência e uma única próxima ação; não
+  transforme o bloqueio em tentativa repetitiva.
+
+## Handover mínimo
+
+Use `.renew-loop/<slug>/handover.md` e mantenha-o curto o bastante para uma
+conversa nova:
+
+```md
+# Handover: <objetivo>
+
+- Turno: <n>/<limite>
+- Estado: <em andamento|bloqueado|concluído>
+- Unidade atual: <uma unidade>
+- Feito: <evidência objetiva>
+- Decisões: <decisões que não podem ser reinventadas>
+- Arquivos alterados: <caminhos>
+- Verificações: <comando + resultado>
+- Bloqueios: <nenhum ou evidência>
+- Próxima ação única: <ação>
+- Parar quando: <condição>
+```
+
+## Limite da ferramenta
+
+Cursor não oferece, por arquivo de projeto, uma API equivalente ao
+`renew_session` do Pi. Ao finalizar um ciclo, escreva o handover e peça ao
+usuário para abrir uma nova conversa ou usar `/new-chat`/resume, fornecendo o
+caminho exato do handover. Nunca alegue que a conversa foi reiniciada
+automaticamente.
